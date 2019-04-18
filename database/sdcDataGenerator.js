@@ -12,9 +12,9 @@ let apartmentCount = 1;
 
 // helper functions for creating documents
 
-let create1000000Users = function() {
+let createUsers = function() {
     let documentsArray = [];
-    for (var i = 0; i < 1000000; i++) {
+    for (var i = 0; i < 1000; i++) {
         documentsArray.push({
             id: userCount,
             name: faker.name.findName(),
@@ -25,7 +25,7 @@ let create1000000Users = function() {
     return documentsArray;
 }
 
-let create1000Apartments = function() {
+let createApartments = function() {
     let documentsArray = [];
     for (var i = 0; i < 1000; i++) {
         documentsArray.push({
@@ -38,7 +38,7 @@ let create1000Apartments = function() {
     return documentsArray;
 }
 
-let create1000Reviews = function() {
+let createReviews = function() {
     let documentsArray = [];
     for (var i = 0; i < 1000; i++) {
         documentsArray.push({
@@ -66,20 +66,52 @@ let create1000Reviews = function() {
 MongoClient.connect(url)
     .then(client => {
         let db = client.db(dbName);
-        let count = 0;
+        let usersCount = 0;
+        let reviewsCount = 0;
+        let apartmentsCount = 0;
         
 
-        let recurse = function() {
-            if (count < 10) {
-                count += 1;
-                let userDocs = create1000000Users();
+        let addUsers = function() {
+            if (usersCount < 10000) {
+                usersCount += 1;
+                let userDocs = createUsers();
                 db.collection('users').insertMany(userDocs, (err, res) => {
-                    console.log(count);
-                    recurse()
+                    console.log(usersCount);
+                    addUsers()
                 })
+            } else {
+                addReviews();
             }
         }
 
-        recurse();
+        let addReviews = function() {
+            if (reviewsCount < 10000) {
+                reviewsCount += 1;
+                let reviewDocs = createReviews();
+                db.collection('reviews').insertMany(reviewDocs, (err, res) => {
+                    console.log(reviewsCount);
+                    addReviews()
+                })
+            } else {
+                addApartments();
+            }
+        }
+
+        let addApartments = function() {
+            if (apartmentsCount < 10000) {
+                apartmentsCount += 1;
+                let apartmentDocs = createApartments();
+                db.collection('apartments').insertMany(apartmentDocs, (err, res) => {
+                    console.log(apartmentsCount);
+                    addApartments()
+                })
+            } else {
+                console.log('all documents seeded');
+            }
+        }
+
+
+        addUsers();
     })
+
     .catch(err => console.log(err))
