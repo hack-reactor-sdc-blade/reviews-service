@@ -9,6 +9,7 @@ const dbName = 'newTestDb';
 let userCount = 1;
 let apartmentCount = 1;
 
+console.log(new Date);
 
 // helper functions for creating documents
 
@@ -66,17 +67,17 @@ let createReviews = function() {
 MongoClient.connect(url)
     .then(client => {
         let db = client.db(dbName);
-        let usersCount = 0;
-        let reviewsCount = 0;
-        let apartmentsCount = 0;
+        let usersBatchCount = 0;
+        let reviewsBatchCount = 0;
+        let apartmentsBatchCount = 0;
         
 
         let addUsers = function() {
-            if (usersCount < 10000) {
-                usersCount += 1;
+            if (usersBatchCount < 30000) {
+                usersBatchCount += 1;
                 let userDocs = createUsers();
                 db.collection('users').insertMany(userDocs, (err, res) => {
-                    console.log(usersCount);
+                    console.log(usersBatchCount);
                     addUsers()
                 })
             } else {
@@ -85,11 +86,11 @@ MongoClient.connect(url)
         }
 
         let addReviews = function() {
-            if (reviewsCount < 10000) {
-                reviewsCount += 1;
+            if (reviewsBatchCount < 30000) {
+                reviewsBatchCount += 1;
                 let reviewDocs = createReviews();
                 db.collection('reviews').insertMany(reviewDocs, (err, res) => {
-                    console.log(reviewsCount);
+                    console.log(reviewsBatchCount);
                     addReviews()
                 })
             } else {
@@ -98,11 +99,11 @@ MongoClient.connect(url)
         }
 
         let addApartments = function() {
-            if (apartmentsCount < 10000) {
-                apartmentsCount += 1;
+            if (apartmentsBatchCount < 10000) {
+                apartmentsBatchCount += 1;
                 let apartmentDocs = createApartments();
                 db.collection('apartments').insertMany(apartmentDocs, (err, res) => {
-                    console.log(apartmentsCount);
+                    console.log(apartmentsBatchCount);
                     addApartments()
                 })
             } else {
