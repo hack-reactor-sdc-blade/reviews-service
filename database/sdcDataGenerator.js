@@ -9,8 +9,6 @@ const dbName = 'newTestDb';
 let userCount = 1;
 let apartmentCount = 1;
 
-console.log(new Date);
-
 // helper functions for creating documents
 
 let createUsers = function() {
