@@ -96,7 +96,7 @@ let apartmentsBatchCount = 0;
 
 let addUsers = function() {
 
-    if (usersBatchCount < 1) {
+    if (usersBatchCount < 30000) {
         usersBatchCount += 1;
         let userDocs = createUsers();
         connection.query(insertUsersStatement, [userDocs], (err, result) => {
@@ -113,7 +113,7 @@ let addUsers = function() {
 };
 
 let addReviews = function() {
-    if (reviewsBatchCount < 1) {
+    if (reviewsBatchCount < 30000) {
         reviewsBatchCount += 1;
         let reviewDocs = createReviews();
         connection.query(insertReviewsStatement, [reviewDocs], (err, result) => {
@@ -130,7 +130,7 @@ let addReviews = function() {
 };
 
 let addApartments = function() {
-    if (apartmentsBatchCount < 1) {
+    if (apartmentsBatchCount < 10000) {
         apartmentsBatchCount += 1;
         let apartmentDocs = createApartments();
         connection.query(insertApartmentsStatement, [apartmentDocs], (err, result) => {
@@ -147,3 +147,6 @@ let addApartments = function() {
 };
 
 addUsers();
+
+
+// module.exports.connection = connection;
