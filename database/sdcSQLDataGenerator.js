@@ -53,7 +53,7 @@ let createReviews = function() {
             Math.floor((() => Math.random() * 5)()) + .5,
             faker.random.number({
                 min: 1,
-                max: 10000000
+                max: 100000
             }),
             faker.random.number({
                 min: 1,
@@ -96,7 +96,7 @@ let apartmentsBatchCount = 0;
 
 let addUsers = function() {
 
-    if (usersBatchCount < 30000) {
+    if (usersBatchCount < 100) {
         usersBatchCount += 1;
         let userDocs = createUsers();
         connection.query(insertUsersStatement, [userDocs], (err, result) => {
@@ -113,7 +113,7 @@ let addUsers = function() {
 };
 
 let addReviews = function() {
-    if (reviewsBatchCount < 30000) {
+    if (reviewsBatchCount < 50000) {
         reviewsBatchCount += 1;
         let reviewDocs = createReviews();
         connection.query(insertReviewsStatement, [reviewDocs], (err, result) => {
@@ -142,11 +142,21 @@ let addApartments = function() {
             }
         })
     } else {
-        console.log('all done');
+        console.log('all records added');
+        connection.query('ALTER TABLE reviews ADD INDEX (apartment_id);', (err, success) => {
+            if (err) {
+                console.log(err);
+            } else {
+                connection.query('ALTER TABLE users ADD INDEX (id);', (err, success) => {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log('all indexes added');
+                    }
+                })
+            }
+        })
     }
 };
 
 addUsers();
-
-
-// module.exports.connection = connection;

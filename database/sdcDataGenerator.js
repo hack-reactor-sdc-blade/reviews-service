@@ -2,7 +2,7 @@ const faker = require('faker');
 
 const MongoClient = require('mongoDb').MongoClient;
 const url = 'mongodb://localhost:27017';
-const dbName = 'newTestDb';
+const dbName = 'airMongo';
 
 
  
@@ -46,7 +46,7 @@ let createReviews = function() {
             rating: Math.floor((() => Math.random() * 5)()) + .5,
             user_id: faker.random.number({
                 min: 1,
-                max: 10000000
+                max: 100000
               }),
             apartment_id: faker.random.number({
                 min: 1,
@@ -71,7 +71,7 @@ MongoClient.connect(url)
         
 
         let addUsers = function() {
-            if (usersBatchCount < 30000) {
+            if (usersBatchCount < 100) {
                 usersBatchCount += 1;
                 let userDocs = createUsers();
                 db.collection('users').insertMany(userDocs, (err, res) => {
@@ -84,7 +84,7 @@ MongoClient.connect(url)
         }
 
         let addReviews = function() {
-            if (reviewsBatchCount < 30000) {
+            if (reviewsBatchCount < 50000) {
                 reviewsBatchCount += 1;
                 let reviewDocs = createReviews();
                 db.collection('reviews').insertMany(reviewDocs, (err, res) => {
@@ -106,6 +106,19 @@ MongoClient.connect(url)
                 })
             } else {
                 console.log('all documents seeded');
+                db.collection('reviews').createIndex({apartment_id: 1}, (err, success) => {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        db.collection('users').createIndex({id: 1}, (err, success) => {
+                            if (err) {
+                                console.log(err);
+                            } else {
+                                console.log('all indexes added');
+                            }
+                        })
+                    }
+                })
             }
         }
 
