@@ -1,3 +1,5 @@
+import React from 'react';
+
 const Response = props => (
   <React.Fragment>
     <div className="response-container">

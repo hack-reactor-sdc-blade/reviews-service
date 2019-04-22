@@ -1,6 +1,7 @@
 import emptyStar from '../../public/images/airbnb-empty-star.png';
 import halfStar from '../../public/images/airbnb-half-star.png';
 import fullStar from '../../public/images/airbnb-full-star.png';
+import React from 'react';
 
 class RatingStars extends React.Component {
   constructor(props) {
