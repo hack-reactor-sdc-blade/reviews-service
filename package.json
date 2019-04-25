@@ -31,7 +31,7 @@
     "sqlite3": "^4.0.6",
     "url-loader": "^1.1.2",
     "util": "^0.11.1",
-    "webpack": "^3.11.0"
+    "webpack": "^4.0.0"
   },
   "devDependencies": {
     "axios": "^0.18.0",
