@@ -3,6 +3,9 @@ const path = require('path');
 
 
 module.exports = {
+  plugins: [
+    new CompressionPlugin()
+  ],
   entry: path.resolve(__dirname, './client/index.js'),
   module: {
     loaders: [
