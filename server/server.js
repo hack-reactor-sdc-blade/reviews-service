@@ -1,4 +1,5 @@
 const express = require('express');
+const expressStaticGzip = require('express-static-gzip');
 const morgan = require('morgan');
 const path = require('path');
 const util = require('util');
@@ -8,7 +9,15 @@ const port = process.env.PORT || 3002;
 const { getReviewsFromDatabase, getSearchResultsFromDatabase } = require('../database/helper/helpers.js');
 
 app.use(morgan('dev'));
-app.use(express.static(path.join(__dirname, '../public')));
+// app.use(express.static(path.join(__dirname, '../public')));
+app.use('/', expressStaticGzip(path.join(__dirname, '../public'), {
+  enableBrotli: true,
+  customCompressions: [{
+      encodingName: 'deflate',
+      fileExtension: 'zz'
+  }],
+  orderPreference: ['br']
+}));
 app.use(cors());
 
 
