@@ -34,7 +34,7 @@ class ReviewList extends React.Component {
   
   getReviews(id) {
     return axios({
-      url: `http://ec2-54-242-101-173.compute-1.amazonaws.com:3002/room${id}`,
+      url: `http://ec2-3-86-139-121.compute-1.amazonaws.com:3002/room${id}`,
       method: 'get',
       params: { limit: 7, offset: this.state.offset } 
     })
@@ -61,7 +61,8 @@ class ReviewList extends React.Component {
   }
 
   getSearchResults(id, word) {
-    axios.get(`http://ec2-54-242-101-173.compute-1.amazonaws.com:3002${id}/search/${word}`)
+    console.log(__dirname);
+    axios.get(`http://ec2-3-86-139-121.compute-1.amazonaws.com:3002${id}/search/${word}`)
     .then(({ data }) => {
       this.setState({
         searchedReviews: data,
