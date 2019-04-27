@@ -6,7 +6,6 @@ const util = require('util');
 const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 3002;
-const { getReviewsFromDatabase, getSearchResultsFromDatabase } = require('../database/helper/helpers.js');
 const axios = require('axios');
 
 app.use(morgan('dev'));
