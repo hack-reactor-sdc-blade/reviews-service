@@ -61,9 +61,9 @@ class ReviewList extends React.Component {
   }
 
   getSearchResults(id, word) {
-    console.log(__dirname);
     axios.get(`http://ec2-3-86-139-121.compute-1.amazonaws.com:3002${id}/search/${word}`)
     .then(({ data }) => {
+      console.log(data);
       this.setState({
         searchedReviews: data,
         allResults: false
