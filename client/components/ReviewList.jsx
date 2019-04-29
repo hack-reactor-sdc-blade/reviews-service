@@ -34,7 +34,7 @@ class ReviewList extends React.Component {
   
   getReviews(id) {
     return axios({
-      url: `http://ec2-3-92-200-68.compute-1.amazonaws.com:3002/room${id}`,
+      url: `http://ec2-18-206-255-113.compute-1.amazonaws.com:3002/room${id}`,
       method: 'get',
       params: { limit: 7, offset: this.state.offset } 
     })
