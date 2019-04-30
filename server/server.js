@@ -38,13 +38,13 @@ app.get('/:id', (req, res) => {
 })
 
 app.get('/room/:id', (req, res) => {
-  axios.get(`http://ec2-3-87-210-224.compute-1.amazonaws.com/room/${req.params.id}`)
+  axios.get(`http://ec2-54-172-211-135.compute-1.amazonaws.com/room/${req.params.id}`)
   .then(results => res.send(results.data))
   .catch(err => {console.log(err)})
 })
 
 app.get('/:id/search/:word', (req, res) => {
-  axios.get(`http://ec2-3-87-210-224.compute-1.amazonaws.com/${req.params.id}/search/${req.params.word}`)
+  axios.get(`http://ec2-54-172-211-135.compute-1.amazonaws.com/${req.params.id}/search/${req.params.word}`)
   .then(results => res.send(results.data))
   .catch(err => console.log(err))
 });
