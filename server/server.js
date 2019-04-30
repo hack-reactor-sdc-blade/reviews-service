@@ -7,6 +7,11 @@ const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 3002;
 const axios = require('axios');
+var http = require('http');
+var https = require('https');
+
+http.globalAgent.maxSockets = 25;
+https.globalAgent.maxSockets = 25;
 
 app.use(morgan('dev'));
 // app.use(express.static(path.join(__dirname, '../public')));
