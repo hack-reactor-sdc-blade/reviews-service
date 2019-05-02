@@ -1,11 +1,12 @@
 var mysql = require('mysql');
 var configWithDb = require('../configWithDb.js');
-var pool = mysql.createPool(configWithDb);
-// connection.connect();
+// var pool = mysql.createPool(configWithDb);
+var connection = mysql.createConnection(configWithDb);
+connection.connect();
 
 
 const getReviewsFromDatabase = (id, callback) => {
-  pool.query(`SELECT users.name, users.avatar, reviews.date, reviews.text, reviews.rating, reviews.has_response, reviews.owner_response FROM users, reviews WHERE users.id = reviews.user_id AND reviews.apartment_id = ${id};`, (err, result) => {
+  connection.query(`SELECT users.name, users.avatar, reviews.date, reviews.text, reviews.rating, reviews.has_response, reviews.owner_response FROM users, reviews WHERE users.id = reviews.user_id AND reviews.apartment_id = ${id};`, (err, result) => {
     if (err) {
         console.log(err);
     } else {
@@ -15,7 +16,7 @@ const getReviewsFromDatabase = (id, callback) => {
 }
 
 const getSearchResultsFromDatabase = (id, word, callback) => {
-  pool.query(`SELECT users.name, users.avatar, reviews.date, reviews.text, reviews.rating, reviews.has_response, reviews.owner_response FROM users, reviews WHERE users.id = reviews.user_id AND reviews.apartment_id = ${id} AND (reviews.text LIKE '%${word}%' OR reviews.text LIKE '% ${word}%');`, (err, result) => {
+  connection.query(`SELECT users.name, users.avatar, reviews.date, reviews.text, reviews.rating, reviews.has_response, reviews.owner_response FROM users, reviews WHERE users.id = reviews.user_id AND reviews.apartment_id = ${id} AND (reviews.text LIKE '%${word}%' OR reviews.text LIKE '% ${word}%');`, (err, result) => {
     if (err) {
         console.log(err);
     } else {
