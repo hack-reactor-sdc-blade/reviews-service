@@ -6,16 +6,14 @@ const util = require('util');
 const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 3002;
-// var http = require('http');
-// var https = require('https');
 const { getReviewsFromDatabase, getSearchResultsFromDatabase } = require('../helper/helpers.js');
 
-// http.globalAgent.maxSockets = 25;
-// https.globalAgent.maxSockets = 25;
 
+// log incoming http requests on server for development convenience
 app.use(morgan('dev'));
 
-// app.use(express.static(path.join(__dirname, '../public')));
+
+// serve up compressed static files for route '/'
 app.use('/', expressStaticGzip(path.join(__dirname, '../public'), {
   enableBrotli: true,
   customCompressions: [{
@@ -25,9 +23,12 @@ app.use('/', expressStaticGzip(path.join(__dirname, '../public'), {
   orderPreference: ['br']
 }));
 
+
+// use appropriate cors headers on all responses
 app.use(cors());
 
 
+// helper functions for organizing database data before sending back to the client
 getPaginatedItems = (items, offset) => {
   return items.slice(offset, offset + 7);
 }
@@ -40,6 +41,8 @@ sortReviews = dates => {
   });
 }
 
+
+// server route handling
 app.get('/:id', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'))
 })
@@ -70,7 +73,6 @@ app.get('/room/:id', (req, res) => {
   });
 });
 
-
 app.get('/:id/search/:word', (req, res) => {
   getSearchResultsFromDatabase(req.params.id, req.params.word, (err, data) => {
     if (err) {
@@ -81,6 +83,11 @@ app.get('/:id/search/:word', (req, res) => {
   });
 });
 
+
+
+
+
+// initiate port listening
 app.listen(port, () => {
   console.log(`server running at: http://localhost:${port}`);
 });
