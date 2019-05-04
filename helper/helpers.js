@@ -1,8 +1,6 @@
 var mysql = require('mysql');
 var configWithDb = require('../configWithDb.js');
 var pool = mysql.createPool(configWithDb);
-// var connection = mysql.createConnection(configWithDb);
-// connection.connect();
 
 
 const getReviewsFromDatabase = (id, callback) => {
